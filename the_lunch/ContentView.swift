@@ -1,21 +1,30 @@
-//
-//  ContentView.swift
-//  the_lunch
-//
-//  Created by Ebtihal Alomari on 09/05/1448 AH.
-//
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List {
+            VStack {
+                Image(.profile)
+                    .resizable()
+                    .frame(width: 120, height: 120)
+
+                Text("Ebtihal, \(24)")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+
+            Section {
+                Text("I’m Ebtihal, passionate about technology, AI, and turning ideas into meaningful experiences.")
+
+                Text("I enjoy learning new things, exploring different perspectives, and challenging myself to grow.")
+
+                Text("I love working with others, but I’m also happiest when I can take an idea from zero and bring it to life.")
+
+                Text("I’m always curious, ambitious, and excited to see where the next idea takes me.")
+            }
         }
-        .padding()
     }
 }
 
