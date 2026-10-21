@@ -9,7 +9,7 @@ struct ContentView: View {
                     .resizable()
                     .frame(width: 120, height: 120)
 
-                Text("Ebtihal, \(24.5)")
+                Text("reema, \(23)")
                     .font(.title2)
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, alignment: .center)
