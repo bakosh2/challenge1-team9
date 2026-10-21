@@ -16,7 +16,7 @@ struct ContentView: View {
             }
 
             Section {
-                Text("I’m Ebtihal, passionate about technology, AI, and turning ideas into meaningful experiences.")
+                Text("I’m randa, passionate about technology, AI, and turning ideas into meaningful experiences.")
 
                 Text("I enjoy learning new things, exploring different perspectives, and challenging myself to grow.")
 
