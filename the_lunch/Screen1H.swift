@@ -1,5 +1,5 @@
 //
-//  ContentView 2.swift
+//  Screen1.swift 2.swift
 //  the_lunch
 //
 //  Created by Haneen on 15/05/1448 AH.
@@ -9,7 +9,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Screen1: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -47,5 +47,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    Screen1()
 }
