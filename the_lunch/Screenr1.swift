@@ -16,9 +16,14 @@ extension Color {
 // MARK: - الشاشة الأولى
 struct Screenr1: View {
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
+
         NavigationStack {
+
             ZStack {
+
                 Color(hex: "F3EDE6").ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 20) {
@@ -28,7 +33,7 @@ struct Screenr1: View {
 
                     Spacer().frame(height: 25)
 
-                    // الانتقال إلى شاشة إرشادات النار
+                    // الكارد الأول: النار
                     NavigationLink(destination: Screenr2()) {
                         SafetyCard(
                             title: "أشعل النار بمسؤولية",
@@ -38,7 +43,7 @@ struct Screenr1: View {
                     }
                     .buttonStyle(.plain)
 
-                   
+                    // الكارد الثاني: النظافة
                     NavigationLink(destination: Screenr3()) {
                         SafetyCard(
                             title: "حافظ على نظافة المكان",
@@ -48,9 +53,7 @@ struct Screenr1: View {
                     }
                     .buttonStyle(.plain)
 
-
-              
-                    // الكارد الثالث: النباتات البرية
+                    // الكارد الثالث: النباتات
                     NavigationLink(destination: Screenr5()) {
                         SafetyCard(
                             title: "اهتم بالنباتات البرية",
@@ -60,8 +63,6 @@ struct Screenr1: View {
                     }
                     .buttonStyle(.plain)
 
-
-                    
                     // الكارد الرابع: الحياة الفطرية
                     NavigationLink(destination: Screenr4()) {
                         SafetyCard(
@@ -72,8 +73,37 @@ struct Screenr1: View {
                     }
                     .buttonStyle(.plain)
 
-
                     Spacer()
+
+                    // زر الهوم الزجاجي أسفل اليمين
+                    HStack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "mountain.2.fill")
+                                .font(.system(size: 25))
+                                .foregroundColor(Color(hex: "616152"))
+                                .frame(width: 58, height: 58)
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
+                                .overlay {
+                                    Circle()
+                                        .stroke(
+                                            .white.opacity(0.7),
+                                            lineWidth: 1
+                                        )
+                                }
+                                .shadow(
+                                    color: .black.opacity(0.15),
+                                    radius: 5,
+                                    y: 3
+                                )
+                        }
+                        .buttonStyle(.plain)
+
+                        Spacer()
+                    }
+                    .padding(.bottom, 20)
                 }
                 .padding(.horizontal, 24)
             }
@@ -87,12 +117,13 @@ struct Screenr1: View {
 struct HeaderCard: View {
 
     var body: some View {
+
         ZStack {
+
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
                 .overlay {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(Color(hex: "6B746F").opacity(0.85))
+                        .fill(Color(hex: "616152").opacity(0.85))
                 }
 
             // صورة الجبل
@@ -101,11 +132,14 @@ struct HeaderCard: View {
                 .scaledToFit()
                 .frame(width: 250)
                 .opacity(0.65)
-                .frame(maxWidth: .infinity,
-                       maxHeight: .infinity,
-                       alignment: .bottomTrailing)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .bottomTrailing
+                )
 
             VStack(alignment: .leading, spacing: 8) {
+
                 Text("السلامة البيئية")
                     .font(.custom("Geeza Pro", size: 30))
                     .bold()
@@ -115,9 +149,11 @@ struct HeaderCard: View {
                     .multilineTextAlignment(.trailing)
             }
             .foregroundColor(Color(hex: "F3EDE6"))
-            .frame(maxWidth: .infinity,
-                   maxHeight: .infinity,
-                   alignment: .topLeading)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
             .padding(20)
         }
         .frame(width: 356, height: 152)
@@ -133,13 +169,16 @@ struct SafetyCard: View {
     let iconColor: Color
 
     var body: some View {
+
         HStack(spacing: 14) {
 
             Image(systemName: icon)
                 .font(.system(size: 25))
                 .foregroundColor(iconColor)
                 .frame(width: 56, height: 56)
-                .background(Color(hex: "6B746F").opacity(0.155))
+                .background(
+                    Color(hex: "6B746F").opacity(0.155)
+                )
                 .clipShape(Circle())
                 .brightness(-0.15)
 
@@ -150,10 +189,6 @@ struct SafetyCard: View {
                 .multilineTextAlignment(.trailing)
 
             Spacer(minLength: 0)
-
-            Image(systemName: "chevron.left")
-                .font(.system(size: 16, weight: .medium))
-                .foregroundColor(Color(hex: "6B746F"))
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
@@ -161,7 +196,11 @@ struct SafetyCard: View {
         .background(Color(hex: "DCD1C4"))
         .clipShape(RoundedRectangle(cornerRadius: 25))
         .contentShape(RoundedRectangle(cornerRadius: 25))
-        .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
+        .shadow(
+            color: .black.opacity(0.08),
+            radius: 4,
+            y: 2
+        )
     }
 }
 

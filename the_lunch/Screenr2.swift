@@ -5,56 +5,56 @@
 //  Created by Randa Alqahtani on 15/05/1448 AH.
 //
 
+
 import SwiftUI
 
 // MARK: - الشاشة الثانية
 struct Screenr2: View {
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
+    @State private var showGuides = false
 
     var body: some View {
 
         ZStack {
 
-            // خلفية الشاشة
-            Color(hex: "F3EDE6")
-                .ignoresSafeArea()
+            Color(hex: "F3EDE6").ignoresSafeArea()
 
             VStack(spacing: 0) {
 
-                // زر الرجوع
+                // زر الرجوع الزجاجي
                 HStack {
-
                     Button {
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.right")
                             .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 46, height: 46)
+                            .foregroundColor(Color(hex: "616152"))
+                            .frame(width: 58, height: 58)
                             .background(.ultraThinMaterial)
                             .clipShape(Circle())
+                            .overlay {
+                                Circle()
+                                    .stroke(.white.opacity(0.7), lineWidth: 1)
+                            }
+                            .shadow(
+                                color: .black.opacity(0.15),
+                                radius: 5,
+                                y: 3
+                            )
                     }
+                    .buttonStyle(.plain)
 
                     Spacer()
                 }
                 .padding(.top, 15)
 
-                // MARK: - الكارد الزيتي
+                // الكارد الزيتي
                 ZStack {
 
-                    // الخلفية الزجاجية
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(
-                                    Color(hex: "6B746F")
-                                        .opacity(0.85)
-                                )
-                        }
+                        .fill(Color(hex: "616152"))
 
-                    // صورة النار من Assets
                     Image("FireCamp")
                         .resizable()
                         .scaledToFit()
@@ -66,27 +66,25 @@ struct Screenr2: View {
                             alignment: .bottomTrailing
                         )
 
-                    // العنوان في المنتصف مع رفعه للأعلى
                     Text("إرشادات السلامة البيئية")
-                        .font(.custom("Geeza Pro", size: 25))
+                        .font(.custom("Geeza Pro", size: 18))
                         .bold()
                         .foregroundColor(Color(hex: "F3EDE6"))
-                        .multilineTextAlignment(.center)
                         .frame(
                             maxWidth: .infinity,
                             maxHeight: .infinity,
-                            alignment: .center
+                            alignment: .leading
                         )
-                        .offset(y: -25)
+                        .padding(20)
                 }
-                .frame(height: 152)
+                .frame(width: 356, height: 152)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding(.top, 60)
 
                 // المسافة بين الكاردين
                 Spacer().frame(height: 80)
 
-                // MARK: - الكارد البيج
+                // الكارد البيج المتحرك
                 VStack(spacing: 60) {
 
                     GuideRow(
@@ -109,15 +107,27 @@ struct Screenr2: View {
                 .background(Color(hex: "DCD1C4"))
                 .clipShape(RoundedRectangle(cornerRadius: 22))
 
+                // حركة الظهور من الأسفل
+                .offset(y: showGuides ? 0 : 500)
+                .opacity(showGuides ? 1 : 0)
+
                 Spacer().frame(height: 15)
             }
             .padding(.horizontal, 20)
         }
         .toolbar(.hidden, for: .navigationBar)
         .environment(\.layoutDirection, .rightToLeft)
+
+        // تشغيل الحركة تلقائيًا عند فتح الشاشة
+        .onAppear {
+            showGuides = false
+
+            withAnimation(.easeOut(duration: 0.7).delay(0.15)) {
+                showGuides = true
+            }
+        }
     }
 }
-
 
 // MARK: - صف الإرشادات
 struct GuideRow: View {
@@ -128,12 +138,10 @@ struct GuideRow: View {
 
         HStack(alignment: .top, spacing: 10) {
 
-            // علامة الصح الخضراء على اليمين
-            Image(systemName: "checkmark.circle")
+            Image(systemName: "mountain.2.circle")
                 .font(.system(size: 21))
-                .foregroundColor(Color(hex: "2B6C07"))
+                .foregroundColor(Color(hex: "626557"))
 
-            // النص العربي بمحاذاة اليمين
             Text(text)
                 .font(.custom("Geeza Pro", size: 18))
                 .bold()
@@ -144,12 +152,9 @@ struct GuideRow: View {
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .environment(\.layoutDirection, .rightToLeft)
     }
 }
 
-
-// MARK: - Preview
 #Preview {
     NavigationStack {
         Screenr2()

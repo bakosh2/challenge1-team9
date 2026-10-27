@@ -5,35 +5,45 @@
 //  Created by Randa Alqahtani on 16/05/1448 AH.
 //
 
+
 import SwiftUI
 
 // MARK: - الشاشة الخامسة
 struct Screenr5: View {
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
+    @State private var showGuides = false
 
     var body: some View {
 
         ZStack {
 
-            // خلفية الشاشة
-            Color(hex: "F3EDE6")
-                .ignoresSafeArea()
+            Color(hex: "F3EDE6").ignoresSafeArea()
 
             VStack(spacing: 0) {
 
-                // زر الرجوع
+                // زر الرجوع الزجاجي
                 HStack {
                     Button {
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.right")
                             .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 46, height: 46)
+                            .foregroundColor(Color(hex: "616152"))
+                            .frame(width: 58, height: 58)
                             .background(.ultraThinMaterial)
                             .clipShape(Circle())
+                            .overlay {
+                                Circle()
+                                    .stroke(.white.opacity(0.7), lineWidth: 1)
+                            }
+                            .shadow(
+                                color: .black.opacity(0.15),
+                                radius: 5,
+                                y: 3
+                            )
                     }
+                    .buttonStyle(.plain)
 
                     Spacer()
                 }
@@ -42,17 +52,10 @@ struct Screenr5: View {
                 // MARK: - الكارد الزيتي
                 ZStack {
 
-                    // الخلفية الزجاجية
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color(hex: "6B746F").opacity(0.85))
-                        }
+                        .fill(Color(hex: "616152"))
 
-                    // صورة النباتات من Assets
-
-                    // صورة النباتات أسفل يسار الكارد
+                    // صورة الشجر أسفل يسار الكارد
                     Image("PlantsCamp")
                         .resizable()
                         .scaledToFit()
@@ -61,33 +64,31 @@ struct Screenr5: View {
                         .frame(
                             maxWidth: .infinity,
                             maxHeight: .infinity,
-                            alignment: .bottomTrailing
+                            alignment: .bottomLeading
                         )
-                        .padding(.leading, 8)
-                        .padding(.bottom, 5)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .offset(x: 1, y: 1)
 
-
-                    // العنوان في المنتصف ومرفوع قليلًا
+                    // عنوان الكارد
                     Text("إرشادات السلامة البيئية")
-                        .font(.custom("Geeza Pro", size: 25))
+                        .font(.custom("Geeza Pro", size: 18))
                         .bold()
                         .foregroundColor(Color(hex: "F3EDE6"))
-                        .multilineTextAlignment(.center)
                         .frame(
                             maxWidth: .infinity,
                             maxHeight: .infinity,
-                            alignment: .center
+                            alignment: .leading
                         )
-                        .offset(y: -25)
+                        .padding(20)
                 }
-                .frame(height: 152)
+                .frame(width: 356, height: 152)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding(.top, 60)
 
                 // المسافة بين الكاردين
                 Spacer().frame(height: 80)
 
-                // MARK: - الكارد البيج
+                // MARK: - الكارد البيج المتحرك
                 VStack(spacing: 60) {
 
                     GuideRow(
@@ -110,12 +111,25 @@ struct Screenr5: View {
                 .background(Color(hex: "DCD1C4"))
                 .clipShape(RoundedRectangle(cornerRadius: 22))
 
+                // حركة صعود الكارد تلقائيًا
+                .offset(y: showGuides ? 0 : 500)
+                .opacity(showGuides ? 1 : 0)
+
                 Spacer().frame(height: 15)
             }
             .padding(.horizontal, 20)
         }
         .toolbar(.hidden, for: .navigationBar)
         .environment(\.layoutDirection, .rightToLeft)
+
+        // تشغيل الحركة عند فتح الشاشة
+        .onAppear {
+            showGuides = false
+
+            withAnimation(.easeOut(duration: 0.7).delay(0.15)) {
+                showGuides = true
+            }
+        }
     }
 }
 
@@ -125,4 +139,5 @@ struct Screenr5: View {
         Screenr5()
     }
 }
+
 
