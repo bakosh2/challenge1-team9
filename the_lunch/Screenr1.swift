@@ -127,7 +127,7 @@ struct Screenr1: View {
 
                 // الكارد الزيتي
                 HeaderCard()
-                    .padding(.top, 60)
+                    .padding(.top, 55)
 
                 Spacer().frame(height: 25)
 
