@@ -17,9 +17,9 @@ extension Color {
     static let aidCardDark = Color(aidHex: 0xCFC2B3)
 
     // ألوان السلامة (ISO 3864)
-    static let aidRed = Color(aidHex: 0x9B2423)
-    static let aidYellow = Color(aidHex: 0xF9A800)
-    static let aidGreen = Color(aidHex: 0x237F52)
+    static let aidRed = AppIconColor.iconOlive
+    static let aidYellow = AppIconColor.iconOlive
+    static let aidGreen = AppIconColor.iconOlive
 }
 
 // MARK: - التباعد (مضاعفات 4)
@@ -144,21 +144,24 @@ struct FirstAidView: View {
         ZStack {
             Color.aidBackground.ignoresSafeArea()
 
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: Space.m) {
-                    AidHeaderCard()
-                        .padding(.bottom, Space.s)
+            VStack(spacing: 0) {
+                AidHeaderCard()
+                    .padding(.horizontal, AppSpacing.pageHorizontal)
+                    .padding(.top, AppSpacing.pageTop)
+                    .padding(.bottom, AppSpacing.headerBottom)
 
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: AppSpacing.row) {
                     ForEach(AidCase.all) { item in
                         Button { selected = item } label: {
                             AidRow(item: item)
                         }
                         .buttonStyle(AidPressStyle())
                     }
+                    }
+                    .padding(.horizontal, AppSpacing.pageHorizontal)
+                    .padding(.bottom, 32)
                 }
-                .padding(.horizontal, Space.xxl)
-                .padding(.top, Space.xl)
-                .padding(.bottom, 32)
             }
         }
         .environment(\.layoutDirection, .rightToLeft)
@@ -183,9 +186,8 @@ struct AidHeaderCard: View {
             Image("aid_kit")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 96)
+                .frame(width: 234, height: AppSpacing.headerImageHeight)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .offset(x: 24)
 
             VStack(alignment: .leading, spacing: Space.s) {
                 Text("الإسعافات الأولية")
@@ -210,8 +212,11 @@ struct AidRow: View {
     var body: some View {
         HStack(spacing: Space.l) {
             Image(systemName: item.icon)
-                .font(.system(size: 24, weight: .semibold))
-                .foregroundColor(item.color)
+                .font(.system(size: 32, weight: .semibold))
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(AppIconColor.iconOlive)
+                .tint(AppIconColor.iconOlive)
+                .frame(width: 32, height: 32)
                 .frame(width: 56, height: 56)
                 .background(Color.aidCardDark, in: Circle())
 
@@ -225,7 +230,8 @@ struct AidRow: View {
         }
         .padding(.horizontal, Space.l)
         .padding(.vertical, Space.m)
-        .frame(maxWidth: .infinity, minHeight: 88)
+        .frame(maxWidth: .infinity)
+        .frame(height: AppSpacing.cardHeight)
         .background(Color.aidCard, in: RoundedRectangle(cornerRadius: 24))
         .overlay(
             RoundedRectangle(cornerRadius: 24)

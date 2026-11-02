@@ -15,14 +15,20 @@ extension Color {
     static let cardTitle = Color(hex: 0x1C1C1C)
     static let cardSubtitle = Color(hex: 0x6B6B66)
 
-    // لوحة الألوان الموحدة حسب موضوع الأيقونة
-    // نفس ألوان أيقونات صفحة الإسعافات الأولية
-    static let topicEmergency = AppIconColor.red
-    static let topicFire = AppIconColor.orange
-    static let topicFirstAid = AppIconColor.green
-    static let topicEnvironment = AppIconColor.green
-    static let topicDisaster = AppIconColor.yellow
-    static let topicWildlife = AppIconColor.blue
+    // ألوان الصفحات الداخلية تبقى بالزيتي الموحد.
+    static let topicEmergency = AppIconColor.iconOlive
+    static let topicFire = AppIconColor.iconOlive
+    static let topicFirstAid = AppIconColor.iconOlive
+    static let topicEnvironment = AppIconColor.iconOlive
+    static let topicDisaster = AppIconColor.iconOlive
+    static let topicWildlife = AppIconColor.iconOlive
+
+    // ألوان الصفحة الرئيسية فقط.
+    static let homeEmergency = Color(hex: 0xB51220)
+    static let homeFire = Color(hex: 0xF28C00)
+    static let homeFirstAid = Color(hex: 0x008F63)
+    static let homeEnvironment = Color(hex: 0x008F63)
+    static let homeDisaster = Color(hex: 0xE5A000)
 }
 
 struct SafetyCategory: Identifiable {
@@ -34,15 +40,15 @@ struct SafetyCategory: Identifiable {
 }
 
 private let categories = [
-    SafetyCategory(title: "أرقام الطوارئ", subtitle: "الوصول السريع إلى أرقام الطوارئ والجهات المختصة", symbol: nil, color: .topicEmergency),
-    SafetyCategory(title: "الحرائق", subtitle: "إرشادات للتعامل مع الحرائق", symbol: "flame", color: .topicFire),
-    SafetyCategory(title: "الإسعافات الأولية", subtitle: "تعرّف على خطوات الإسعافات الأولية", symbol: "cross.case", color: .topicFirstAid),
-    SafetyCategory(title: "السلامة البيئية", subtitle: "إرشادات السيول والعواصف لتجنب الكوارث", symbol: "leaf", color: .topicEnvironment),
-    SafetyCategory(title: "الكوارث الطبيعية", subtitle: "تعرّف على المخاطر البيئية وطرق الوقاية", symbol: "cloud.sun.rain", color: .topicDisaster)
+    SafetyCategory(title: "أرقام الطوارئ", subtitle: "الوصول السريع إلى أرقام الطوارئ والجهات المختصة", symbol: nil, color: .homeEmergency),
+    SafetyCategory(title: "الحرائق", subtitle: "إرشادات للتعامل مع الحرائق", symbol: "flame", color: .homeFire),
+    SafetyCategory(title: "الإسعافات الأولية", subtitle: "تعرّف على خطوات الإسعافات الأولية", symbol: "cross.case", color: .homeFirstAid),
+    SafetyCategory(title: "السلامة البيئية", subtitle: "إرشادات السيول والعواصف لتجنب الكوارث", symbol: "leaf", color: .homeEnvironment),
+    SafetyCategory(title: "الكوارث الطبيعية", subtitle: "تعرّف على المخاطر البيئية وطرق الوقاية", symbol: "cloud.sun.rain", color: .homeDisaster)
 ]
 
 struct HomeScreen: View {
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 2)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: AppSpacing.row), count: 2)
 
     var body: some View {
         NavigationStack {
@@ -65,7 +71,7 @@ struct HomeScreen: View {
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                     .padding(.top, AppSpacing.xxl)
 
-                        LazyVGrid(columns: columns, spacing: 24) {
+                        LazyVGrid(columns: columns, spacing: AppSpacing.row) {
                             ForEach(categories) { item in
                                 categoryLink(for: item)
                             }
@@ -110,9 +116,9 @@ struct CategoryCard: View {
         VStack(alignment: .leading, spacing: AppSpacing.s) {
             Group {
                 if let symbol = item.symbol {
-                    Image(systemName: symbol).font(.system(size: 28))
+                    Image(systemName: symbol).font(.system(size: 32))
                 } else {
-                    Text("SOS").font(.system(size: 36, weight: .heavy))
+                    Text("SOS").font(.system(size: 32, weight: .heavy))
                 }
             }
             .foregroundStyle(item.color)

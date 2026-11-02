@@ -73,22 +73,24 @@ struct GuidelinesScreen: View {
             // خلفية سادة مثل Screenr1
             Color.guideBeige.ignoresSafeArea()
 
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 16) {
-                    guideBanner
+            VStack(spacing: 0) {
+                guideBanner
+                    .padding(.horizontal, AppSpacing.pageHorizontal)
+                    .padding(.top, AppSpacing.pageTop)
+                    .padding(.bottom, AppSpacing.headerBottom)
 
-                    Spacer().frame(height: 4)
-
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: AppSpacing.row) {
                     ForEach(guideCases) { item in
                         Button { selected = item } label: {
                             row(item)
                         }
                         .buttonStyle(.plain)
                     }
+                    }
+                    .padding(.horizontal, AppSpacing.pageHorizontal)
+                    .padding(.bottom, 32)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 24)
-                .padding(.bottom, 32)
             }
 
         }
@@ -112,15 +114,15 @@ struct GuidelinesScreen: View {
             Image("r")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 144, height: 96)
+                .frame(width: AppSpacing.headerImageWidth, height: AppSpacing.headerImageHeight)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("الإرشادات")
+                Text("الحرائق")
                     .font(.custom("Geeza Pro", size: AppFontSize.title))
                     .bold()
 
-                Text("تعلّم كيف تتصرف بأمان في أوقات الطوارئ")
+                Text("تعلّم كيف تتصرف بأمان في\nأوقات الطوارئ")
                     .font(.custom("Geeza Pro", size: AppFontSize.body))
                     .multilineTextAlignment(.leading)
             }
@@ -144,12 +146,12 @@ struct GuidelinesScreen: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 32, height: 32)
-                    .foregroundStyle(item.color)
+                    .foregroundStyle(AppIconColor.iconOlive)
+                    .tint(AppIconColor.iconOlive)
             }
 
             Text(item.title)
-                .font(.custom("Geeza Pro", size: AppFontSize.body))
-                .bold()
+                .aidFont(AppFontSize.body)
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -159,9 +161,14 @@ struct GuidelinesScreen: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .frame(maxWidth: .infinity, minHeight: 88)
+        .frame(maxWidth: .infinity)
+        .frame(height: AppSpacing.cardHeight)
         .background(Color.guideCard)
         .clipShape(RoundedRectangle(cornerRadius: AppSpacing.xxl))
+        .overlay(
+            RoundedRectangle(cornerRadius: AppSpacing.xxl)
+                .stroke(.white.opacity(0.6), lineWidth: 1)
+        )
         .contentShape(RoundedRectangle(cornerRadius: AppSpacing.xxl))
         .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
     }

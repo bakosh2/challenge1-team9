@@ -15,7 +15,7 @@ extension Color {
 
 
 // MARK: - الشاشة الرئيسية
-struct Screenr1: View {
+struct LamaEnvironmentalPreview: View {
 
     var body: some View {
 
@@ -180,5 +180,37 @@ struct SafetyCard: View {
 
 // MARK: - Preview
 #Preview {
-    Screenr1()
+    LamaEnvironmentalPreview()
+}
+
+// Compatibility helpers used by Lama's disaster-page prototype.
+// The existing app screens remain the source of truth for the live navigation.
+enum AppColors {
+    static let background = Color(hex: "F3EDE6")
+    static let banner = Color(hex: "6B746F").opacity(0.85)
+    static let card = Color(hex: "DCD1C4")
+}
+
+struct BackgroundView: View {
+    var body: some View {
+        AppColors.background.ignoresSafeArea()
+    }
+}
+
+extension Font {
+    static func app(_ size: CGFloat, bold: Bool = false) -> Font {
+        .custom("Geeza Pro", size: size)
+            .weight(bold ? .bold : .regular)
+    }
+}
+
+extension View {
+    func customBackButton() -> some View {
+        toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                UnifiedBackButton { }
+            }
+        }
+        .toolbar(.hidden, for: .navigationBar)
+    }
 }

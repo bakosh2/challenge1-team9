@@ -20,13 +20,13 @@ struct EmergencyScreen: View {
             Color.screenBackground.ignoresSafeArea()
 
             ScrollView {
-                VStack(spacing: AppSpacing.xxl) {
+                VStack(spacing: AppSpacing.row) {
                     ForEach(items) { item in
                         EmergencyRow(item: item)
                     }
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 24)
+                .padding(.horizontal, AppSpacing.pageHorizontal)
+                .padding(.top, AppSpacing.pageTop)
                 .padding(.bottom, 32)
             }
         }
@@ -46,10 +46,11 @@ struct EmergencyRow: View {
                 .bold()
                 .foregroundStyle(.primary)
 
-            Link(destination: URL(string: "tel://\(item.number)")!) {
+            Link(destination: URL(string: "tel:\(item.number)")!) {
                 HStack {
                     Image(systemName: "phone")
-                        .foregroundStyle(Color.topicEmergency)
+                        .symbolRenderingMode(.monochrome)
+                        .foregroundStyle(Color.guideOlive)
                     Spacer()
                     Text(item.number)
                         .font(.custom("Geeza Pro", size: AppFontSize.title))
@@ -62,7 +63,7 @@ struct EmergencyRow: View {
                 .background(Color.cardBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 28))
             }
-            .buttonStyle(.plain)
+            .accessibilityLabel("الاتصال بـ \(item.title) \(item.number)")
         }
     }
 }

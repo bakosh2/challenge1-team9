@@ -80,21 +80,24 @@ struct Screenr1: View {
         ZStack {
             Color.guideBeige.ignoresSafeArea()
 
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 16) {
-                    EnvironmentalHeaderCard()
-                        .padding(.top, 24)
+            VStack(spacing: 0) {
+                EnvironmentalHeaderCard()
+                    .padding(.horizontal, AppSpacing.pageHorizontal)
+                    .padding(.top, AppSpacing.pageTop)
+                    .padding(.bottom, AppSpacing.headerBottom)
 
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(alignment: .leading, spacing: AppSpacing.row) {
                     ForEach(environmentalGuides) { guide in
                         Button { selectedGuide = guide } label: {
                             EnvironmentalCard(guide: guide)
                         }
                         .buttonStyle(.plain)
                     }
+                    }
+                    .padding(.horizontal, AppSpacing.pageHorizontal)
+                    .padding(.bottom, 32)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 8)
-                .padding(.bottom, 32)
             }
         }
         .environment(\.layoutDirection, .rightToLeft)
@@ -118,7 +121,7 @@ private struct EnvironmentalHeaderCard: View {
             Image("c1")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 192)
+                .frame(width: AppSpacing.headerImageWidth, height: AppSpacing.headerImageHeight)
                 .opacity(0.75)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
 
@@ -144,14 +147,16 @@ private struct EnvironmentalCard: View {
     var body: some View {
         HStack(spacing: AppSpacing.m) {
             Image(systemName: guide.icon)
-                .font(.system(size: 24))
-                .foregroundStyle(guide.iconColor)
+                .font(.system(size: 32))
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(AppIconColor.iconOlive)
+                .tint(AppIconColor.iconOlive)
+                .frame(width: 32, height: 32)
                 .frame(width: 56, height: 56)
                 .background(Color.aidCardDark, in: Circle())
 
             Text(guide.title)
-                .font(.custom("Geeza Pro", size: AppFontSize.body))
-                .bold()
+                .aidFont(AppFontSize.body)
                 .foregroundStyle(.black)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -160,9 +165,14 @@ private struct EnvironmentalCard: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .frame(maxWidth: .infinity, minHeight: 88)
+        .frame(maxWidth: .infinity)
+        .frame(height: AppSpacing.cardHeight)
         .background(Color.guideCard)
         .clipShape(RoundedRectangle(cornerRadius: AppSpacing.xxl))
+        .overlay(
+            RoundedRectangle(cornerRadius: AppSpacing.xxl)
+                .stroke(.white.opacity(0.6), lineWidth: 1)
+        )
         .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
     }
 }

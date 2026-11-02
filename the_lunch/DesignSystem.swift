@@ -8,6 +8,13 @@ enum AppSpacing {
     static let xl: CGFloat = 20
     static let xxl: CGFloat = 24
     static let xxxl: CGFloat = 32
+    static let row: CGFloat = 16
+    static let headerImageWidth: CGFloat = 192
+    static let headerImageHeight: CGFloat = 128
+    static let pageHorizontal: CGFloat = 24
+    static let pageTop: CGFloat = 24
+    static let headerBottom: CGFloat = 16
+    static let cardHeight: CGFloat = 88
 }
 
 enum AppFontSize {
@@ -21,9 +28,10 @@ enum AppFontSize {
 // لوحة ألوان السلامة المشتركة بين جميع الصفحات
 // الدلالات مبنية على ترميز السلامة الشائع: خطر، حريق/تحذير، تنبيه، أمان، ومعلومة.
 enum AppIconColor {
-    static let red = Color(hex: 0x9B2423)
-    static let orange = Color(hex: 0xF9A800)
-    static let yellow = Color(hex: 0xB87900)
-    static let green = Color(hex: 0x237F52)
-    static let blue = Color(hex: 0x1976D2)
+    static let iconOlive = Color(red: 0.3804, green: 0.3804, blue: 0.3216)
+    static let red = iconOlive
+    static let orange = iconOlive
+    static let yellow = iconOlive
+    static let green = iconOlive
+    static let blue = iconOlive
 }

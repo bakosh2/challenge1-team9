@@ -267,9 +267,5 @@ struct SectionSheet: View {
 }
  
 #Preview {
-    NavigationStack {
-        DisasterPage(disaster: .sandstorm)
-    }
-    .environment(\.layoutDirection, .rightToLeft)
-    .preferredColorScheme(.light)
+    Text("صفحة الكوارث")
 }
