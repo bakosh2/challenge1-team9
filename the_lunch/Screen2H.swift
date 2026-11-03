@@ -103,6 +103,9 @@ struct HomeScreen: View {
         case "السلامة البيئية":
             NavigationLink { Screenr1() } label: { CategoryCard(item: item) }
                 .buttonStyle(.plain)
+        case "الكوارث الطبيعية":
+            NavigationLink { DisasterPage(disaster: .naturalDisasters) } label: { CategoryCard(item: item) }
+                .buttonStyle(.plain)
         default:
             CategoryCard(item: item)
         }
